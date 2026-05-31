@@ -1,0 +1,84 @@
+spring:
+  application:
+    name: pead-market-data
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/pead_market_data_db
+    username: ${DB_USER:pead}
+    password: ${DB_PASSWORD:pead}
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 3
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.jdbc.batch_size: 100
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+pead:
+  strategy:
+    min-eps-surprise-pct: 3.0
+    min-revenue-surprise-pct: 2.0
+    min-gap-pct: 5.0
+    min-relative-volume: 2.0
+    min-pead-score: 60
+    max-risk-pct-per-trade: 0.01
+    max-concurrent-positions: 5
+    daily-loss-limit-pct: 0.02
+    max-drawdown-pct: 0.10
+    max-position-size-pct: 0.10
+    max-sector-concentration-pct: 0.20
+    profit-target-1r: 2.0
+    profit-target-2r: 3.0
+    enable-short-selling: false
+    excluded-sectors: []
+
+  data-sources:
+    polygon:
+      base-url: https://api.polygon.io
+      api-key: ${POLYGON_API_KEY:}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      polygon-market-data:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+  retry:
+    instances:
+      polygon-market-data:
+        max-attempts: 3
+        wait-duration: 2s
+
+logging:
+  level:
+    org.pead: INFO

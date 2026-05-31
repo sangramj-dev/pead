@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: pead-strategy-validator
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/pead_strategy_db
+    username: ${DB_USER:pead}
+    password: ${DB_PASSWORD:pead_password}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: UTC
+        order_inserts: true
+        order_updates: true
+        jdbc.batch_size: 50
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+server:
+  port: 8084
+
+pead:
+  strategy:
+    min-eps-surprise-pct: 3.0
+    min-revenue-surprise-pct: 2.0
+    min-gap-pct: 5.0
+    min-relative-volume: 2.0
+    min-pead-score: 60
+    max-risk-pct-per-trade: 0.01
+    max-concurrent-positions: 5
+    daily-loss-limit-pct: 0.02
+    max-drawdown-pct: 0.10
+    max-position-size-pct: 0.10
+    max-sector-concentration-pct: 0.20
+    profit-target-1r: 2.0
+    profit-target-2r: 3.0
+    enable-short-selling: false
+    excluded-sectors: []
+  market-data:
+    base-url: ${MARKET_DATA_BASE_URL:http://localhost:8082}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.pead.strategyvalidator: INFO
+    org.springframework.kafka: INFO

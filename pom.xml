@@ -17,6 +17,7 @@
         <module>pead-market-data</module>
         <module>pead-scanner</module>
         <module>pead-strategy-validator</module>
+        <module>pead-backtesting</module>
     </modules>
 
     <properties>

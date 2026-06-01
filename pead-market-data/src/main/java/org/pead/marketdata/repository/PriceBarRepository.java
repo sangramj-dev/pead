@@ -24,4 +24,6 @@ public interface PriceBarRepository extends JpaRepository<PriceBar, Long> {
                                          @Param("endDate") LocalDate endDate);
 
     boolean existsByTickerAndBarDateAndTimeframe(String ticker, LocalDate barDate, String timeframe);
+
+    boolean existsByTickerAndBarDate(String ticker, LocalDate barDate);
 }

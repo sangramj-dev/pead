@@ -73,6 +73,9 @@ pead:
     fmp:
       base-url: https://financialmodelingprep.com/api
       api-key: ${FMP_API_KEY:}
+    screener:
+      base-url: https://www.screener.in
+      request-delay-ms: 1000
 
 resilience4j:
   circuitbreaker:

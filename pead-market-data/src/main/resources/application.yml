@@ -65,6 +65,9 @@ pead:
     polygon:
       base-url: https://api.polygon.io
       api-key: ${POLYGON_API_KEY:}
+    yahoo-finance:
+      base-url: https://query1.finance.yahoo.com
+      request-delay-ms: 200
 
 resilience4j:
   circuitbreaker:

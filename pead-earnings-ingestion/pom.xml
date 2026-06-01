@@ -74,6 +74,13 @@
             <artifactId>resilience4j-reactor</artifactId>
         </dependency>
 
+        <!-- HTML Scraping -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+
         <!-- Utilities -->
         <dependency>
             <groupId>org.projectlombok</groupId>

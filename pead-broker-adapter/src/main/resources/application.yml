@@ -1,0 +1,51 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: pead-broker-adapter
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/pead_broker_db
+    username: ${DB_USER:pead}
+    password: ${DB_PASSWORD:pead_password}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    consumer:
+      group-id: broker-adapter-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "org.pead.common.event"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+pead:
+  broker:
+    type: paper
+    slippage-pct: 0.001
+    initial-capital: 1000000
+  strategy:
+    min-eps-surprise-pct: 3.0
+    min-revenue-surprise-pct: 2.0
+    min-gap-pct: 5.0
+    min-relative-volume: 2.0
+    min-pead-score: 60
+    max-risk-pct-per-trade: 0.01
+    max-concurrent-positions: 5
+    daily-loss-limit-pct: 0.02
+    max-drawdown-pct: 0.10
+    max-position-size-pct: 0.10
+    max-sector-concentration-pct: 0.20
+    profit-target-1r: 2.0
+    profit-target-2r: 3.0
+    enable-short-selling: false
+    excluded-sectors: []

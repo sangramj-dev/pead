@@ -19,6 +19,7 @@
         <module>pead-strategy-validator</module>
         <module>pead-backtesting</module>
         <module>pead-signal-engine</module>
+        <module>pead-broker-adapter</module>
     </modules>
 
     <properties>

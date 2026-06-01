@@ -18,6 +18,7 @@
         <module>pead-scanner</module>
         <module>pead-strategy-validator</module>
         <module>pead-backtesting</module>
+        <module>pead-signal-engine</module>
     </modules>
 
     <properties>

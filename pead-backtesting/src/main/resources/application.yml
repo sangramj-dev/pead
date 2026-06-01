@@ -5,9 +5,9 @@ spring:
   application:
     name: pead-backtesting
   datasource:
-    url: jdbc:postgresql://localhost:5433/pead_backtesting_db
-    username: pead
-    password: pead
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/pead_backtesting_db
+    username: ${DB_USER:pead}
+    password: ${DB_PASSWORD:pead_password}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
@@ -36,8 +36,8 @@ pead:
     max-drawdown-pct: 0.10
     max-position-size-pct: 0.10
     max-sector-concentration-pct: 0.20
-    profit-target1-r: 2.0
-    profit-target2-r: 3.0
+    profit-target-1r: 2.0
+    profit-target-2r: 3.0
     enable-short-selling: false
     excluded-sectors: []
   services:

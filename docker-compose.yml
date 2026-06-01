@@ -98,6 +98,29 @@ services:
     networks:
       - pead-network
 
+  # =========================================================================
+  # OBSERVABILITY (uncomment when needed)
+  # =========================================================================
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: pead-prometheus
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   networks:
+  #     - pead-network
+
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   container_name: pead-grafana
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     GF_SECURITY_ADMIN_PASSWORD: admin
+  #   networks:
+  #     - pead-network
+
 networks:
   pead-network:
     driver: bridge
